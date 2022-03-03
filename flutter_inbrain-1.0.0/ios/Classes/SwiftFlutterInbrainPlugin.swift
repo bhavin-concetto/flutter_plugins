@@ -26,12 +26,12 @@ public class SwiftFlutterInbrainPlugin: NSObject, FlutterPlugin, InBrainDelegate
         channel.invokeMethod("didRecieveInBrainRewards", arguments: points)
     }
     
-    public func surveysClosed() {
+    public func surveysClosed(byWebView: Bool, completedSurvey: Bool) {
         channel.invokeMethod("surveyClosed", arguments: points)
         print("Surveys closed")
     }
     
-    public func surveysClosedFromPage() {
+    public func surveysClosedFromPage(byWebView: Bool, completedSurvey: Bool) {
         channel.invokeMethod("surveyClosedFromPage", arguments: points)
         print("Surveys closed From Page")
     }
@@ -53,7 +53,10 @@ public class SwiftFlutterInbrainPlugin: NSObject, FlutterPlugin, InBrainDelegate
         inBrain.set(userID: user_id)
         inBrain.setLanguage(value: "en-us")
         inBrain.checkForAvailableSurveys { hasSurveys, _  in
-             guard hasSurveys else { return }
+             guard hasSurveys else {
+                 self.channel.invokeMethod("onSurveysAvailable", arguments: hasSurveys)
+                 return
+             }
             self.channel.invokeMethod("onSurveysAvailable", arguments: hasSurveys)
          }
                 }    
