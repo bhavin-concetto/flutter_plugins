@@ -4,3 +4,9 @@ Initial release
 Reward callback fixed
 ## 1.0.0
 iOS support added
+## 1.1.0
+Null safety support
+## 1.1.0+1
+Dependencies update
+## 1.2.0
+Dependencies update

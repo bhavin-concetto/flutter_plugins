@@ -66,6 +66,19 @@ public class FlutterInbrainPlugin implements FlutterPlugin, MethodCallHandler,Ac
         }
     }
 
+    void sendBool(final String method, final Boolean isAvailable) {
+        try {
+            FlutterInbrainPlugin.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    channel.invokeMethod(method, isAvailable);
+                }
+            });
+        } catch (Exception e) {
+            Log.e("InbrainSDK", "Error " + e.toString());
+        }
+    }
+
 
     InBrainCallback callback = new InBrainCallback() {
 
@@ -100,23 +113,17 @@ public class FlutterInbrainPlugin implements FlutterPlugin, MethodCallHandler,Ac
            String apiSecret = call.argument("apiSecret");
            boolean isS2S = call.argument("isS2S");
            String user_id = call.argument("user_id");
-            
+
             InBrain.getInstance().setInBrain(activity, apiClientId, apiSecret, isS2S, user_id);
             InBrain.getInstance().addCallback(callback);
             InBrain.getInstance().areSurveysAvailable(activity, new SurveysAvailableCallback() {
                 @Override
                 public void onSurveysAvailable(final boolean available) {
-                    List < String > list = new ArrayList < String > ();
-                    if (available) {
-                        list.add("true");
-                    } else {
-                        list.add("false");
-                    }
-                    OnMethodCallHandler("onSurveysAvailable", list);
+                    sendBool("onSurveysAvailable", available);
                     Log.d("InbrainSDK", "Surveys available:" + available);
                 }
-            }); 
-        }   
+            });
+        }
         } else if (call.method.equals("destroyCallback")) {
             InBrain.getInstance().removeCallback(callback);
         } else if (call.method.equals("customiseUI")) {
