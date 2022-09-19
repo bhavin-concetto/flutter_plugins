@@ -1,6 +1,6 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint flutter_inbrain.podspec` to validate before publishing.
+# Run `pod lib lint inbrain_flutter.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_inbrain'
@@ -15,12 +15,11 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'InBrainSurveys', '1.8.5'
+  s.dependency 'InBrainSurveys'
   s.platform = :ios, '10.0'
 
   # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 arm64' }
   s.swift_version = '5.0'
-
   s.static_framework = true
 end

@@ -9,7 +9,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.1.2'
+
     }
 }
 
@@ -17,7 +18,7 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-                maven { url 'https://jitpack.io' }
+        maven { url 'https://jitpack.io' }
 
     }
 }
@@ -27,11 +28,17 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 31
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         minSdkVersion 16
     }
-}
 
-dependencies {
-    implementation 'com.github.inbrainai:sdk-android:1.0.21'
+    dependencies {
+        // other dependencies here
+        implementation 'com.github.inbrainai:sdk-android:1.0.20'
+    }
 }
